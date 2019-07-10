@@ -29,32 +29,6 @@ public class TelaPrincipal {
 		}
 	}
 	
-	public static void pousarAviaoPista1(FilaEncadeada um, FilaEncadeada dois, FilaEncadeada cinco) {
-		if(filaPousoP1<2) {
-			if(!sinalFila1) {
-				System.out.println("O aviao "+um.getPrimeiro().getItem().getEmpresa()+" pousou na Pista 1");
-				um.retiraPrimeiro();
-				filaPousoP1+=1;
-				sinalFila1 = true;
-			}else{
-				System.out.println("O aviao "+dois.getPrimeiro().getItem().getEmpresa()+" pousou na Pista 1");
-				dois.retiraPrimeiro();
-				filaPousoP1+=1;
-				sinalFila1 = false;
-			}
-		}else {
-			System.out.println("O aviao "+cinco.getPrimeiro().getItem().getEmpresa()+" decolou na Pista 1");
-			cinco.retiraPrimeiro();
-			filaPousoP1 = 0;
-		}
-	}
-	
-	public static void derrubarAviao(FilaEncadeada um, FilaEncadeada dois,
-			   FilaEncadeada tres, FilaEncadeada quatro) {
-		
-		
-	}
-	
 	public static void main(String[] args) {
 		FilaEncadeada FilaUm = new FilaEncadeada();
 		FilaEncadeada FilaDois = new FilaEncadeada();

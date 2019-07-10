@@ -57,6 +57,41 @@ public class FilaEncadeada{
 		}
 	}
 	
+	public void retiraAviaoSemCombustivel() {
+		if(!this.vazia()) {
+			No noAtual;
+			No proximoNo;
+			Aviao proximoAviao;
+			noAtual = this.primeiro;
+			
+			//caso o primeiro da fila esteja com 0 em combustivel
+			while(noAtual !=null && noAtual.getItem().getCombustivel()<=0) {
+				System.out.println("O aviao "+noAtual.getItem().getEmpresa()+" id: "+noAtual.getItem().getId()+" caiu.");
+				this.primeiro = noAtual.getProximo();
+				noAtual = this.primeiro;
+				this.tamanho--;
+			}
+			
+			while(noAtual!=null) {
+				if(noAtual.getProximo() !=null && noAtual.getProximo().getItem().getCombustivel()<=0) {
+					if(noAtual.getProximo().getProximo()!=null){
+						System.out.println("O aviao "+noAtual.getItem().getEmpresa()+" caiu.");
+						proximoNo = noAtual.getProximo().getProximo();
+						noAtual.setProximo(proximoNo);
+						this.tamanho--;
+						noAtual=noAtual.getProximo();
+					}else {
+						System.out.println("O aviao "+noAtual.getItem().getEmpresa()+" caiu.");
+						noAtual.setProximo(null);
+						this.tamanho--;
+					}
+				}else {
+					noAtual=noAtual.getProximo();
+				}
+			}
+		}
+	}
+	
 	public void gerarID(Aviao aviao) {
 		int id = 0;
 		Random random = new Random();
@@ -88,15 +123,30 @@ public class FilaEncadeada{
 			noAtual = this.primeiro;
 			while(noAtual !=null) {
 				if(noAtual.getItem().getSatatus()==1) {
-					System.out.println("Aviao "+noAtual.getItem().getEmpresa()+", Combustivel= "+noAtual.getItem().getCombustivel()+", Tempo na Fila= "+noAtual.getItem().getTempoGastoAterrisagem()+" unidades de tempo.");
+					System.out.println("Aviao "+noAtual.getItem().getEmpresa()+", ID: "+noAtual.getItem().getId()+", Combustivel= "+noAtual.getItem().getCombustivel()+", Tempo na Fila= "+noAtual.getItem().getTempoGastoAterrisagem()+" unidades de tempo.");
 				}else if(noAtual.getItem().getSatatus()==2) {
-					System.out.println("Aviao "+noAtual.getItem().getEmpresa()+" esta na FILA para Decolar, Tempo na FILA= "+noAtual.getItem().getTempoGastoDecolar()+" unidades de tempo.");
+					System.out.println("Aviao "+noAtual.getItem().getEmpresa()+", ID: "+noAtual.getItem().getId()+" esta na FILA para Decolar, Tempo na FILA= "+noAtual.getItem().getTempoGastoDecolar()+" unidades de tempo.");
 				}
 				noAtual = noAtual.getProximo();
 			}
 		}
 	}
 	
+	public boolean pesquisaQtdCombustivel() {
+		No registroAtual;
+		if(this.vazia()) {
+			return false;
+		}else {
+			registroAtual = this.primeiro;
+			while(registroAtual!=null) {
+				if(registroAtual.getItem().getCombustivel()<=3) {
+					return true;
+				}
+				registroAtual = registroAtual.getProximo();
+			}
+		}
+		return false;
+	}
 	
 	public int getTamanho() {
 		return tamanho;
@@ -105,5 +155,5 @@ public class FilaEncadeada{
 	private void setTamanho(int tamanho) {
 		this.tamanho = tamanho;
 	}
-	
+
 }

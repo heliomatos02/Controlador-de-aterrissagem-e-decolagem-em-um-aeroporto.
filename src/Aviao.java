@@ -32,7 +32,6 @@ public class Aviao {
 
 	public void setId(int id) {
 		this.id = id;
-		this.empresa = empresa+" "+id;
 	}
 
 	public int getSatatus() {
