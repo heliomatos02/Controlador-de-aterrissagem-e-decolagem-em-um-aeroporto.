@@ -10,13 +10,14 @@ public class Controle {
 	private static final String empresa4 = "AZUL";
 	private static final String empresa5 = "AVIANCA";
 	private Aviao retiraPrimeroAviao;
+	private Aviao retiraAviaoEmergencia;
 	private int contadorPouso = 0;
 	private int contadorDecolagem = 0;
 	private int filaPousoP1=0;
 	private int filaPousoP2=0;
 	private int retornoPousoEdecolagemP1=0;
 	private int retornoPousoEdecolagemP2=0;
-
+	private int retornoPousoEdecolagemP3=0;
 	public void inseriAviao(FilaEncadeada um, FilaEncadeada dois, FilaEncadeada tres, FilaEncadeada quatro,
 			FilaEncadeada cinco, FilaEncadeada seis, FilaEncadeada sete) {
 		Random random = new Random();
@@ -201,6 +202,32 @@ public class Controle {
 		
 		System.out.println("\n---------Conteudo FILA 7 - PISTA 3 - "+" "+sete.getTamanho()+" avioes ---------");
 		sete.imprimirConteudo();
+		retornoPousoEdecolagemP3 = pousarEdecolarAviaoPista3(um, dois, tres, quatro, sete);
+		if(retornoPousoEdecolagemP3==7) {
+			retiraPrimeroAviao = sete.retiraPrimeiro();
+			System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" decolou na Pista 2");
+			zeraRetornoPousoEdecolagemP3();
+		}else if(retornoPousoEdecolagemP3==1) {
+			retiraAviaoEmergencia = um.pousoEmergencia();
+			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
+			//System.out.println("O aviao "+retiraAviaoEmergencia.getEmpresa()+" id: "+retiraAviaoEmergencia.getId()+" pousou na Pista 3");
+			//zeraRetornoPousoEdecolagemP3();
+		}else if(retornoPousoEdecolagemP3==2) {
+			retiraAviaoEmergencia = dois.pousoEmergencia();
+			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
+			/*System.out.println("O aviao "+retiraAviaoEmergencia.getEmpresa()+" id: "+retiraAviaoEmergencia.getId()+" pousou na Pista 3");
+			zeraRetornoPousoEdecolagemP3();*/
+		}else if(retornoPousoEdecolagemP3==3) {
+			retiraAviaoEmergencia = tres.pousoEmergencia();
+			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
+			/*System.out.println("O aviao "+retiraAviaoEmergencia.getEmpresa()+" id: "+retiraAviaoEmergencia.getId()+" pousou na Pista 3");
+			zeraRetornoPousoEdecolagemP3();*/
+		}else if(retornoPousoEdecolagemP3==4) {
+			retiraAviaoEmergencia = quatro.pousoEmergencia();
+			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
+			/*System.out.println("O aviao "+retiraAviaoEmergencia.getEmpresa()+" id: "+retiraAviaoEmergencia.getId()+" pousou na Pista 3");
+			zeraRetornoPousoEdecolagemP3();*/
+		}
 		
 	}
 	
@@ -283,14 +310,20 @@ public class Controle {
 	}
 	
 	private int pousarAviaoPista1(FilaEncadeada um, FilaEncadeada dois, FilaEncadeada cinco) {
-		//so vai decolar apos duas aterrisagem
-		//a nao ser que a fila esteja vazia
-		if((((um!=null && um.getPrimeiro()!=null) || (dois!=null && dois.getPrimeiro()!=null))) && (filaPousoP1<2 || cinco==null)) {
-			if(!sinalFila1 || (dois == null || dois.getPrimeiro()==null)) {
+		if((um.getPrimeiro()!=null || dois.getPrimeiro()!=null) && (filaPousoP1==0 || cinco.getPrimeiro()==null || verificaPrateleiraFila(dois) || verificaPrateleiraFila(um))){
+			if((verificaPrateleiraFila(um))) {
 				filaPousoP1+=1;
 				sinalFila1 = true;
 				return 1;
-			}else{
+			}else if(verificaPrateleiraFila(dois)){
+				filaPousoP1+=1;
+				sinalFila1 = false;
+				return 2;
+			}else if(!sinalFila1) {
+				filaPousoP1+=1;
+				sinalFila1 = true;
+				return 1;
+			}else {
 				filaPousoP1+=1;
 				sinalFila1 = false;
 				return 2;
@@ -302,15 +335,29 @@ public class Controle {
 		return -1;
 	}
 	
+	
+	private boolean verificaPrateleiraFila(FilaEncadeada filaEncadeada) {
+		if(((filaEncadeada != null && filaEncadeada.getPrimeiro()!=null) && (filaEncadeada.getPrimeiro().getItem().getCombustivel()<=3))) {
+			return true;
+		}
+		return false;
+	}
+	
 	private int pousarEdecolarAviaoPista2(FilaEncadeada tres, FilaEncadeada quatro, FilaEncadeada seis) {
-		//so vai decolar depois que os dois primeiros das filas de aterrisagem aterrisar
-		//a nao ser que a fila esteja vazia
-		if((((tres!=null && tres.getPrimeiro()!=null) || (quatro!=null && quatro.getPrimeiro()!=null))) && (filaPousoP2<2 || seis==null)) {
-			if(!sinalFila2 || (quatro == null || quatro.getPrimeiro()==null)) {
+		if( (tres.getPrimeiro()!=null || quatro.getPrimeiro()!=null) && (filaPousoP2==0 || seis.getPrimeiro()==null || verificaPrateleiraFila(quatro) || verificaPrateleiraFila(tres))){
+			if((verificaPrateleiraFila(tres))) {
 				filaPousoP2+=1;
 				sinalFila2 = true;
 				return 3;
-			}else{
+			}else if(verificaPrateleiraFila(quatro)){
+				filaPousoP2+=1;
+				sinalFila2 = false;
+				return 4;
+			}else if(!sinalFila2) {
+				filaPousoP2+=1;
+				sinalFila2 = true;
+				return 3;
+			}else {
 				filaPousoP2+=1;
 				sinalFila2 = false;
 				return 4;
@@ -322,11 +369,38 @@ public class Controle {
 		return -1;
 	}
 	
+	private int pousarEdecolarAviaoPista3(FilaEncadeada um, FilaEncadeada dois, FilaEncadeada tres, FilaEncadeada quatro, FilaEncadeada sete) {
+		
+		if(um.pesquisaQtdCombustivel()) {
+			return 1;
+		}else if(dois.pesquisaQtdCombustivel()) {
+			return 2;
+		}else if(tres.pesquisaQtdCombustivel()) {
+			return 3;
+		}else if(quatro.pesquisaQtdCombustivel()) {
+			return 4;
+		}else if(sete!=null && sete.getPrimeiro()!=null) {
+			return 7;
+		}
+		return -1;
+	}
+	
+	private void inserirAviaoPousoEmergencia(FilaEncadeada filaEncadeada, Aviao aviao) {
+		filaEncadeada.insereEmergencia(aviao);
+		System.out.println("O aviao "+aviao.getEmpresa()+" id: "+aviao.getId()+" foi inserido na Fila 7 para realizar um pouso de emergencia.");
+		retiraPrimeroAviao = filaEncadeada.retiraPrimeiro();
+		System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" conseguiu pousar na Pista 3");
+	}
+	
 	private void zeraRetornoPousoEdecolagemP1() {
 		retornoPousoEdecolagemP1 = 0;
 	}
 	
 	private void zeraRetornoPousoEdecolagemP2() {
 		retornoPousoEdecolagemP2 = 0;
+	}
+	
+	private void zeraRetornoPousoEdecolagemP3() {
+		retornoPousoEdecolagemP3 = 0;
 	}
 }

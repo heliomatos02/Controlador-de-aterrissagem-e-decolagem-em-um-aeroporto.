@@ -40,6 +40,22 @@ public class FilaEncadeada{
 		}
 	}
 
+	public void insereEmergencia(Aviao x) {
+		No registroAtual = new No();
+		registroAtual.setItem(x);
+		
+		if(this.vazia()){
+			this.primeiro = registroAtual;
+			this.tamanho+=1;
+		}else {
+			registroAtual.setProximo(this.primeiro);
+			this.primeiro = registroAtual;
+			this.tamanho+=1;
+		}
+		
+	}
+	
+	
 	public boolean vazia() {
 		return this.primeiro == null ? true : false;	
 	}
@@ -92,7 +108,46 @@ public class FilaEncadeada{
 		}
 	}
 	
-	public void gerarID(Aviao aviao) {
+	public Aviao pousoEmergencia() {
+		if(!this.vazia()) {
+			No noAtual;
+			No proximoNo;
+			Aviao proximoAviao;
+			noAtual = this.primeiro;
+			Aviao retornoAviao;
+			//caso o primeiro da fila esteja com 0 em combustivel
+			while(noAtual !=null && noAtual.getItem().getCombustivel()<=3) {
+				retornoAviao = this.primeiro.getItem();
+				this.primeiro = noAtual.getProximo();
+				noAtual = this.primeiro;
+				this.tamanho--;
+				return retornoAviao;
+			}
+			
+			while(noAtual!=null) {
+				if(noAtual.getProximo() !=null && noAtual.getProximo().getItem().getCombustivel()<=3) {
+					if(noAtual.getProximo().getProximo()!=null){
+						retornoAviao = noAtual.getItem();
+						proximoNo = noAtual.getProximo().getProximo();
+						noAtual.setProximo(proximoNo);
+						this.tamanho--;
+						noAtual=noAtual.getProximo();
+						return retornoAviao;
+					}else {
+						retornoAviao = noAtual.getItem();
+						noAtual.setProximo(null);
+						this.tamanho--;
+						return retornoAviao;
+					}
+				}else {
+					noAtual=noAtual.getProximo();
+				}
+			}
+		}
+		return null;
+	}
+	
+	private void gerarID(Aviao aviao) {
 		int id = 0;
 		Random random = new Random();
 		
@@ -105,7 +160,7 @@ public class FilaEncadeada{
 		}
 	}
 	
-	public void gerarTempo(Aviao aviao) {
+	private void gerarTempo(Aviao aviao) {
 		int tempo = 0;
 		Random random = new Random();
 		
