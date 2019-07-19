@@ -112,38 +112,34 @@ public class FilaEncadeada{
 		if(!this.vazia()) {
 			No noAtual;
 			No proximoNo;
-			Aviao proximoAviao;
 			noAtual = this.primeiro;
 			Aviao retornoAviao;
 			//caso o primeiro da fila esteja com 0 em combustivel
-			while(noAtual !=null && noAtual.getItem().getCombustivel()<=3) {
+			if(noAtual !=null && noAtual.getItem().getCombustivel()<=3) {
 				retornoAviao = this.primeiro.getItem();
 				this.primeiro = noAtual.getProximo();
-				noAtual = this.primeiro;
 				this.tamanho--;
 				return retornoAviao;
 			}
 			
 			while(noAtual!=null) {
-				if(noAtual.getProximo() !=null && noAtual.getProximo().getItem().getCombustivel()<=3) {
-					if(noAtual.getProximo().getProximo()!=null){
-						retornoAviao = noAtual.getItem();
+				if((noAtual.getProximo() !=null && noAtual.getProximo().getItem()!=null) && noAtual.getProximo().getItem().getCombustivel()<=3) {
+					if(noAtual.getProximo().getProximo()!=null) {
+						retornoAviao = noAtual.getProximo().getItem();
 						proximoNo = noAtual.getProximo().getProximo();
 						noAtual.setProximo(proximoNo);
 						this.tamanho--;
-						noAtual=noAtual.getProximo();
 						return retornoAviao;
 					}else {
-						retornoAviao = noAtual.getItem();
+						retornoAviao = noAtual.getProximo().getItem();
 						noAtual.setProximo(null);
 						this.tamanho--;
 						return retornoAviao;
 					}
 				}else {
-					noAtual=noAtual.getProximo();
+					noAtual = noAtual.getProximo();
 				}
-			}
-		}
+			}}
 		return null;
 	}
 	

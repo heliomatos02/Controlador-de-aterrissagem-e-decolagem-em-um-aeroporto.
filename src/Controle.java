@@ -18,6 +18,7 @@ public class Controle {
 	private int retornoPousoEdecolagemP1=0;
 	private int retornoPousoEdecolagemP2=0;
 	private int retornoPousoEdecolagemP3=0;
+	
 	public void inseriAviao(FilaEncadeada um, FilaEncadeada dois, FilaEncadeada tres, FilaEncadeada quatro,
 			FilaEncadeada cinco, FilaEncadeada seis, FilaEncadeada sete) {
 		Random random = new Random();
