@@ -18,6 +18,10 @@ public class Controle {
 	private int retornoPousoEdecolagemP1=0;
 	private int retornoPousoEdecolagemP2=0;
 	private int retornoPousoEdecolagemP3=0;
+	private int qtdPouso=0;
+	private int somaTotalTempoGastoPouso=0;
+	private int qtdDecolagem=0;
+	private int somaTotalTempoGastoDecolgem=0;
 	
 	public void inseriAviao(FilaEncadeada um, FilaEncadeada dois, FilaEncadeada tres, FilaEncadeada quatro,
 			FilaEncadeada cinco, FilaEncadeada seis, FilaEncadeada sete) {
@@ -151,8 +155,9 @@ public class Controle {
 			retiraPrimeroAviao = um.retiraPrimeiro();
 			System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" pousou na Pista 1");
 			zeraRetornoPousoEdecolagemP1();
+			implementaQtdPouso();
+			SomaTotalTempoGastoPouso(retiraPrimeroAviao);
 		}
-		System.out.println(um.pesquisaQtdCombustivel());
 		
 		System.out.println("\n---------Conteudo Prateleira 2 - PISTA 1 - "+" "+dois.getTamanho()+" avioes ---------");
 		dois.imprimirConteudo();
@@ -161,8 +166,9 @@ public class Controle {
 			retiraPrimeroAviao = dois.retiraPrimeiro();
 			System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" pousou na Pista 1");
 			zeraRetornoPousoEdecolagemP1();
+			implementaQtdPouso();
+			SomaTotalTempoGastoPouso(retiraPrimeroAviao);
 		}
-		System.out.println(dois.pesquisaQtdCombustivel());
 		
 		System.out.println("\n---------Conteudo Prateleira 3 - PISTA 2 - "+" "+tres.getTamanho()+" avioes ---------");
 		tres.imprimirConteudo();
@@ -172,8 +178,9 @@ public class Controle {
 			retiraPrimeroAviao = tres.retiraPrimeiro();
 			System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" pousou na Pista 2");
 			zeraRetornoPousoEdecolagemP2();
+			implementaQtdPouso();
+			SomaTotalTempoGastoPouso(retiraPrimeroAviao);
 		}
-		System.out.println(tres.pesquisaQtdCombustivel());
 		
 		System.out.println("\n---------Conteudo Prateleira 4 - PISTA 2 - "+" "+quatro.getTamanho()+" avioes ---------");
 		quatro.imprimirConteudo();
@@ -182,8 +189,9 @@ public class Controle {
 			retiraPrimeroAviao = quatro.retiraPrimeiro();
 			System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" pousou na Pista 2");
 			zeraRetornoPousoEdecolagemP2();
+			implementaQtdPouso();
+			SomaTotalTempoGastoPouso(retiraPrimeroAviao);
 		}
-		System.out.println(quatro.pesquisaQtdCombustivel());
 		
 		System.out.println("\n---------Conteudo FILA 5 - PISTA 1 - "+" "+cinco.getTamanho()+" avioes ---------");
 		cinco.imprimirConteudo();
@@ -191,6 +199,8 @@ public class Controle {
 			retiraPrimeroAviao = cinco.retiraPrimeiro();
 			System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" decolou na Pista 1");
 			zeraRetornoPousoEdecolagemP1();
+			implementaQtdDcalagem();
+			SomaTotalTempoGastoDecolagem(retiraPrimeroAviao);
 		}
 		
 		System.out.println("\n---------Conteudo FILA 6 - PISTA 2 - "+" "+seis.getTamanho()+" avioes ---------");
@@ -199,6 +209,8 @@ public class Controle {
 			retiraPrimeroAviao = seis.retiraPrimeiro();
 			System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" decolou na Pista 2");
 			zeraRetornoPousoEdecolagemP2();
+			implementaQtdDcalagem();
+			SomaTotalTempoGastoDecolagem(retiraPrimeroAviao);
 		}
 		
 		System.out.println("\n---------Conteudo FILA 7 - PISTA 3 - "+" "+sete.getTamanho()+" avioes ---------");
@@ -208,26 +220,20 @@ public class Controle {
 			retiraPrimeroAviao = sete.retiraPrimeiro();
 			System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" decolou na Pista 2");
 			zeraRetornoPousoEdecolagemP3();
+			implementaQtdDcalagem();
+			SomaTotalTempoGastoDecolagem(retiraPrimeroAviao);
 		}else if(retornoPousoEdecolagemP3==1) {
 			retiraAviaoEmergencia = um.pousoEmergencia();
 			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
-			//System.out.println("O aviao "+retiraAviaoEmergencia.getEmpresa()+" id: "+retiraAviaoEmergencia.getId()+" pousou na Pista 3");
-			//zeraRetornoPousoEdecolagemP3();
 		}else if(retornoPousoEdecolagemP3==2) {
 			retiraAviaoEmergencia = dois.pousoEmergencia();
 			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
-			/*System.out.println("O aviao "+retiraAviaoEmergencia.getEmpresa()+" id: "+retiraAviaoEmergencia.getId()+" pousou na Pista 3");
-			zeraRetornoPousoEdecolagemP3();*/
 		}else if(retornoPousoEdecolagemP3==3) {
 			retiraAviaoEmergencia = tres.pousoEmergencia();
 			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
-			/*System.out.println("O aviao "+retiraAviaoEmergencia.getEmpresa()+" id: "+retiraAviaoEmergencia.getId()+" pousou na Pista 3");
-			zeraRetornoPousoEdecolagemP3();*/
 		}else if(retornoPousoEdecolagemP3==4) {
 			retiraAviaoEmergencia = quatro.pousoEmergencia();
 			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
-			/*System.out.println("O aviao "+retiraAviaoEmergencia.getEmpresa()+" id: "+retiraAviaoEmergencia.getId()+" pousou na Pista 3");
-			zeraRetornoPousoEdecolagemP3();*/
 		}
 		
 	}
@@ -391,6 +397,24 @@ public class Controle {
 		System.out.println("O aviao "+aviao.getEmpresa()+" id: "+aviao.getId()+" foi inserido na Fila 7 para realizar um pouso de emergencia.");
 		retiraPrimeroAviao = filaEncadeada.retiraPrimeiro();
 		System.out.println("O aviao "+retiraPrimeroAviao.getEmpresa()+" id: "+retiraPrimeroAviao.getId()+" conseguiu pousar na Pista 3");
+		implementaQtdPouso();
+		SomaTotalTempoGastoPouso(retiraPrimeroAviao);
+	}
+	
+	private void implementaQtdPouso() {
+		qtdPouso+=1;
+	}
+	
+	private void SomaTotalTempoGastoPouso(Aviao aviao) {
+		somaTotalTempoGastoPouso+=aviao.getTempoGastoAterrisagem();
+	}
+	
+	private void implementaQtdDcalagem() {
+		qtdDecolagem+=1;
+	}
+	
+	private void SomaTotalTempoGastoDecolagem(Aviao aviao) {
+		somaTotalTempoGastoDecolgem+=aviao.getTempoGastoDecolar();
 	}
 	
 	private void zeraRetornoPousoEdecolagemP1() {
@@ -404,4 +428,21 @@ public class Controle {
 	private void zeraRetornoPousoEdecolagemP3() {
 		retornoPousoEdecolagemP3 = 0;
 	}
+
+	public int getQtdPouso() {
+		return qtdPouso;
+	}
+
+	public int getSomaTotalTempoGastoPouso() {
+		return somaTotalTempoGastoPouso;
+	}
+
+	public int getQtdDecolagem() {
+		return qtdDecolagem;
+	}
+	
+	public int getSomaTotalTempoGastoDecolgem() {
+		return somaTotalTempoGastoDecolgem;
+	}
+	
 }

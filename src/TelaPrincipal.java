@@ -1,33 +1,11 @@
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.plaf.synth.SynthScrollBarUI;
+
 public class TelaPrincipal {
 	
 	public static int numeroInteracao = 1;
-	public static boolean sinalFila1=false;//FALSE = POUSA PRATILEIRA 1 // TRUE = POUSA PRATELEIRA 2 (AMBOS DA FILA 1)
-	public static boolean sinalFila2=false;//FALSE = POUSA PRATILEIRA 1 // TRUE = POUSA PRATELEIRA 2 (AMBOS DA FILA 1)
-	public static int filaPousoP1=0;
-	public static int filaPousoP2=0;
-	
-	public static void pousarAviaoPista2(FilaEncadeada tres, FilaEncadeada quatro, FilaEncadeada seis) {
-		if(filaPousoP2<2) {
-			if(!sinalFila2) {
-				System.out.println("O aviao "+tres.getPrimeiro().getItem().getEmpresa()+" pousou na Pista 2");
-				tres.retiraPrimeiro();
-				filaPousoP2+=1;
-				sinalFila2 = true;
-			}else{
-				System.out.println("O aviao "+quatro.getPrimeiro().getItem().getEmpresa()+" pousou na Pista 2");
-				quatro.retiraPrimeiro();
-				filaPousoP2+=1;
-				sinalFila2 = false;
-			}
-		}else {
-			System.out.println("O aviao "+seis.getPrimeiro().getItem().getEmpresa()+" decolou na Pista 2");
-			seis.retiraPrimeiro();
-			filaPousoP2 = 0;
-		}
-	}
 	
 	public static void main(String[] args) {
 		FilaEncadeada FilaUm = new FilaEncadeada();
@@ -44,14 +22,26 @@ public class TelaPrincipal {
 		while(condicao) {
 			System.out.println("***************TEMPO "+numeroInteracao+"***********");
 			controle.inseriAviao(FilaUm, FilaDois,FilaTres,FilaQuatro,FilaCinco,FilaSeis,FilaSete);
-			/*incrementarTempoGasto(FilaUm, FilaDois,FilaTres,FilaQuatro,FilaCinco,FilaSeis,FilaSete);
-			pousarAviaoPista1(FilaUm, FilaDois, FilaCinco);
-			pousarAviaoPista2(FilaTres,FilaQuatro,FilaSeis);
-			decrementarCombustivel(FilaUm, FilaDois,FilaTres,FilaQuatro);
-			derrubarAviao(FilaUm, FilaDois,FilaTres,FilaQuatro);
-			listarConteudo(FilaUm, FilaDois,FilaTres,FilaQuatro,FilaCinco,FilaSeis,FilaSete);*/
 			controle.listarConteudo(FilaUm, FilaDois,FilaTres,FilaQuatro,FilaCinco,FilaSeis,FilaSete);
 			System.out.println();
+			System.out.println("-------------------------------------");
+			if(controle.getQtdPouso()!=0) {
+				double mediaPouso = (double)controle.getSomaTotalTempoGastoPouso()/(double)controle.getQtdPouso();
+				System.out.println("Quantidade de pouso(s) realizados -> "+controle.getQtdPouso());
+				System.out.println("Tempo medio para pousar --> "+mediaPouso+" unidades de tempo.");
+			}else {
+				System.out.println("Quantidade de pouso(s) realizados -> "+controle.getQtdPouso());
+			}
+			System.out.println("-------------------------------------");
+			if(controle.getQtdDecolagem()!=0) {
+				System.out.println(controle.getSomaTotalTempoGastoDecolgem());
+				double mediaDecolagem = (double)controle.getSomaTotalTempoGastoDecolgem()/(double)controle.getQtdDecolagem();
+				System.out.println("Quantidade de decolagens realizadas -> "+controle.getQtdDecolagem());
+				System.out.println("Tempo medio para decolar --> "+mediaDecolagem+" unidades de tempo.");
+			}else {
+				System.out.println("Quantidade de decolagens realizados -> "+controle.getQtdDecolagem());
+			}
+			System.out.println("-------------------------------------");
 			System.out.println("Digite S para continuar ou N para parar exucucao");
 			preRequisitoCondicao = scanner.nextLine();
 			if(preRequisitoCondicao.equalsIgnoreCase("N")) {
