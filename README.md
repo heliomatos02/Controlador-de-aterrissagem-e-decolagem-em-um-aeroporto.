@@ -23,5 +23,5 @@ d) o número de aviões que aterrissaram sem reserva de combustível.
 Os itens b e c acima devem ser calculados para os aviões que já decolaram ou pousaram, respectivamente.
 Para a implementação deste projeto desenvolvi minha própria lista encadeada.
 
-A baixo a video aula usada para implementação da lista encadeada.
+Segue o link da video aula usada para implementação da lista encadeada.
 https://www.youtube.com/watch?v=ZT8DBnMeDLo&list=LLbA0dz3KiDQv-sjmcE1UOrQ&index=36&t=0s
