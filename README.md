@@ -1,4 +1,4 @@
-# Controlador-de-aterrissagem-e-decolagem-em-um-aeroporto.
+# Controlador de aterrissagem e decolagem em um aeroporto.
 Projeto desenvolvido na disciplina de Algoritmos e Estrutura de Dados no UniBH.
 O objetivo deste projeto é simular os padrões de aterrissagem e decolagem em um aeroporto.
 Suponha um aeroporto que possui três pistas, numeradas como 1, 2 e 3. Existem quatro “prateleiras” de espera para aterrissagem, duas para cada uma das pistas 1 e 2. Aeronaves que se aproximam do aeroporto
