@@ -7,6 +7,14 @@ public class TelaPrincipal {
 	
 	public static int numeroInteracao = 1;
 	
+	public static void tempo() {
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void main(String[] args) {
 		FilaEncadeada FilaUm = new FilaEncadeada();
 		FilaEncadeada FilaDois = new FilaEncadeada();
@@ -19,7 +27,10 @@ public class TelaPrincipal {
 		Scanner scanner = new Scanner(System.in);
 		boolean condicao = true;
 		String preRequisitoCondicao;
-		while(condicao) {
+		int qtdInteracoes;
+		System.out.println("Digite o numero de interacoes: ");
+		qtdInteracoes = scanner.nextInt();
+		while(qtdInteracoes!=0) {
 			System.out.println("***************TEMPO "+numeroInteracao+"***********");
 			controle.inseriAviao(FilaUm, FilaDois,FilaTres,FilaQuatro,FilaCinco,FilaSeis,FilaSete);
 			controle.listarConteudo(FilaUm, FilaDois,FilaTres,FilaQuatro,FilaCinco,FilaSeis,FilaSete);
@@ -34,7 +45,6 @@ public class TelaPrincipal {
 			}
 			System.out.println("-------------------------------------");
 			if(controle.getQtdDecolagem()!=0) {
-				System.out.println(controle.getSomaTotalTempoGastoDecolgem());
 				double mediaDecolagem = (double)controle.getSomaTotalTempoGastoDecolgem()/(double)controle.getQtdDecolagem();
 				System.out.println("Quantidade de decolagens realizadas -> "+controle.getQtdDecolagem());
 				System.out.println("Tempo medio para decolar --> "+mediaDecolagem+" unidades de tempo.");
@@ -42,12 +52,11 @@ public class TelaPrincipal {
 				System.out.println("Quantidade de decolagens realizados -> "+controle.getQtdDecolagem());
 			}
 			System.out.println("-------------------------------------");
-			System.out.println("Digite S para continuar ou N para parar exucucao");
-			preRequisitoCondicao = scanner.nextLine();
-			if(preRequisitoCondicao.equalsIgnoreCase("N")) {
-				condicao = false;
-			}
+			System.out.println("Quantidade de avioes que pousaram sem combustivel --> "+controle.getSomaTotalAvioesSemCombustivel());
+			System.out.println("-------------------------------------");
 			numeroInteracao+=1;
+			qtdInteracoes--;
+			tempo();
 		}
 	}
 }

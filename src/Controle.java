@@ -22,6 +22,7 @@ public class Controle {
 	private int somaTotalTempoGastoPouso=0;
 	private int qtdDecolagem=0;
 	private int somaTotalTempoGastoDecolgem=0;
+	private int somaTotalAvioesSemCombustivel=0;
 	
 	public void inseriAviao(FilaEncadeada um, FilaEncadeada dois, FilaEncadeada tres, FilaEncadeada quatro,
 			FilaEncadeada cinco, FilaEncadeada seis, FilaEncadeada sete) {
@@ -148,6 +149,7 @@ public class Controle {
 			   FilaEncadeada sete) {
 		
 		System.out.println("---------Conteudo Prateleira 1 - PISTA 1 - "+" "+um.getTamanho()+" avioes ---------");
+		tempo();
 		um.imprimirConteudo();
 		um.retiraAviaoSemCombustivel();
 		retornoPousoEdecolagemP1 = pousarAviaoPista1(um, dois, cinco);
@@ -157,9 +159,11 @@ public class Controle {
 			zeraRetornoPousoEdecolagemP1();
 			implementaQtdPouso();
 			SomaTotalTempoGastoPouso(retiraPrimeroAviao);
+			incrementaSomaTotalAviaoSemCombustivel(retiraPrimeroAviao);
 		}
 		
 		System.out.println("\n---------Conteudo Prateleira 2 - PISTA 1 - "+" "+dois.getTamanho()+" avioes ---------");
+		tempo();
 		dois.imprimirConteudo();
 		dois.retiraAviaoSemCombustivel();
 		if(retornoPousoEdecolagemP1==2 && (dois!=null && dois.getPrimeiro()!=null)) {
@@ -168,9 +172,11 @@ public class Controle {
 			zeraRetornoPousoEdecolagemP1();
 			implementaQtdPouso();
 			SomaTotalTempoGastoPouso(retiraPrimeroAviao);
+			incrementaSomaTotalAviaoSemCombustivel(retiraPrimeroAviao);
 		}
 		
 		System.out.println("\n---------Conteudo Prateleira 3 - PISTA 2 - "+" "+tres.getTamanho()+" avioes ---------");
+		tempo();
 		tres.imprimirConteudo();
 		tres.retiraAviaoSemCombustivel();
 		retornoPousoEdecolagemP2 = pousarEdecolarAviaoPista2(tres, quatro, seis);
@@ -180,9 +186,11 @@ public class Controle {
 			zeraRetornoPousoEdecolagemP2();
 			implementaQtdPouso();
 			SomaTotalTempoGastoPouso(retiraPrimeroAviao);
+			incrementaSomaTotalAviaoSemCombustivel(retiraPrimeroAviao);
 		}
 		
 		System.out.println("\n---------Conteudo Prateleira 4 - PISTA 2 - "+" "+quatro.getTamanho()+" avioes ---------");
+		tempo();
 		quatro.imprimirConteudo();
 		quatro.retiraAviaoSemCombustivel();
 		if(retornoPousoEdecolagemP2==4 && (quatro!=null && quatro.getPrimeiro()!=null)) {
@@ -191,9 +199,11 @@ public class Controle {
 			zeraRetornoPousoEdecolagemP2();
 			implementaQtdPouso();
 			SomaTotalTempoGastoPouso(retiraPrimeroAviao);
+			incrementaSomaTotalAviaoSemCombustivel(retiraPrimeroAviao);
 		}
 		
 		System.out.println("\n---------Conteudo FILA 5 - PISTA 1 - "+" "+cinco.getTamanho()+" avioes ---------");
+		tempo();
 		cinco.imprimirConteudo();
 		if(retornoPousoEdecolagemP1==5) {
 			retiraPrimeroAviao = cinco.retiraPrimeiro();
@@ -204,6 +214,7 @@ public class Controle {
 		}
 		
 		System.out.println("\n---------Conteudo FILA 6 - PISTA 2 - "+" "+seis.getTamanho()+" avioes ---------");
+		tempo();
 		seis.imprimirConteudo();
 		if(retornoPousoEdecolagemP2==6) {
 			retiraPrimeroAviao = seis.retiraPrimeiro();
@@ -214,6 +225,7 @@ public class Controle {
 		}
 		
 		System.out.println("\n---------Conteudo FILA 7 - PISTA 3 - "+" "+sete.getTamanho()+" avioes ---------");
+		tempo();
 		sete.imprimirConteudo();
 		retornoPousoEdecolagemP3 = pousarEdecolarAviaoPista3(um, dois, tres, quatro, sete);
 		if(retornoPousoEdecolagemP3==7) {
@@ -225,17 +237,20 @@ public class Controle {
 		}else if(retornoPousoEdecolagemP3==1) {
 			retiraAviaoEmergencia = um.pousoEmergencia();
 			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
+			SomaTotalAviaoSemcombustivel();
 		}else if(retornoPousoEdecolagemP3==2) {
 			retiraAviaoEmergencia = dois.pousoEmergencia();
 			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
+			SomaTotalAviaoSemcombustivel();
 		}else if(retornoPousoEdecolagemP3==3) {
 			retiraAviaoEmergencia = tres.pousoEmergencia();
 			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
+			SomaTotalAviaoSemcombustivel();
 		}else if(retornoPousoEdecolagemP3==4) {
 			retiraAviaoEmergencia = quatro.pousoEmergencia();
 			inserirAviaoPousoEmergencia(sete, retiraAviaoEmergencia);
+			SomaTotalAviaoSemcombustivel();
 		}
-		
 	}
 	
 	private void incrementarTempoGastoPousar(FilaEncadeada um, FilaEncadeada dois,
@@ -425,6 +440,24 @@ public class Controle {
 		retornoPousoEdecolagemP2 = 0;
 	}
 	
+	private void SomaTotalAviaoSemcombustivel() {
+		somaTotalAvioesSemCombustivel+=1;
+	}
+	
+	public void incrementaSomaTotalAviaoSemCombustivel(Aviao aviao) {
+		if(aviao.getCombustivel()<=3) {
+			somaTotalAvioesSemCombustivel+=1;
+		}
+	}
+	public void tempo() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private void zeraRetornoPousoEdecolagemP3() {
 		retornoPousoEdecolagemP3 = 0;
 	}
@@ -444,5 +477,8 @@ public class Controle {
 	public int getSomaTotalTempoGastoDecolgem() {
 		return somaTotalTempoGastoDecolgem;
 	}
-	
+
+	public int getSomaTotalAvioesSemCombustivel() {
+		return somaTotalAvioesSemCombustivel;
+	}
 }

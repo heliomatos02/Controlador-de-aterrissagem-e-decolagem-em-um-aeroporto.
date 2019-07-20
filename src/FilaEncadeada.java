@@ -86,20 +86,23 @@ public class FilaEncadeada{
 				this.primeiro = noAtual.getProximo();
 				noAtual = this.primeiro;
 				this.tamanho--;
+				tempo();
 			}
 			
 			while(noAtual!=null) {
 				if(noAtual.getProximo() !=null && noAtual.getProximo().getItem().getCombustivel()<=0) {
 					if(noAtual.getProximo().getProximo()!=null){
-						System.out.println("O aviao "+noAtual.getItem().getEmpresa()+" caiu.");
+						System.out.println("O aviao "+noAtual.getProximo().getProximo().getItem().getEmpresa()+" id: "+noAtual.getProximo().getProximo().getItem().getId()+" caiu.");
 						proximoNo = noAtual.getProximo().getProximo();
 						noAtual.setProximo(proximoNo);
 						this.tamanho--;
 						noAtual=noAtual.getProximo();
+						tempo();
 					}else {
-						System.out.println("O aviao "+noAtual.getItem().getEmpresa()+" caiu.");
+						System.out.println("O aviao "+noAtual.getItem().getEmpresa()+" id: "+noAtual.getItem().getId()+" caiu.");
 						noAtual.setProximo(null);
 						this.tamanho--;
+						tempo();
 					}
 				}else {
 					noAtual=noAtual.getProximo();
@@ -207,4 +210,12 @@ public class FilaEncadeada{
 		this.tamanho = tamanho;
 	}
 
+	public void tempo() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
